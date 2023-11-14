@@ -43,6 +43,7 @@ dependencies:
   flutter_redux: ^0.10.0
   redux_thunk: ^0.4.0
   equatable: ^2.0.5
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
