@@ -34,6 +34,42 @@ class _CharacterViewState extends State<CharacterView> {
       });
   }
 
+    Future<void> _dialogBuilder(BuildContext context, Results character) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('${character.name}'),
+          content: Container(
+            child: Column(
+              children: [
+                ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.network(
+                  character.image!,
+                  height: 200.0,
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              ],
+            ),),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +108,11 @@ class _CharacterViewState extends State<CharacterView> {
         itemCount: _info!.count,
         itemBuilder: (context, index) {
           final item = _characters![index];
-          return Card(
+          return InkWell(
+            onTap: () {
+              _dialogBuilder(context, item);
+            },
+            child: Card(
             margin: const EdgeInsets.all(8),
             child: ListTile(
               leading: ClipRRect(
@@ -87,6 +127,7 @@ class _CharacterViewState extends State<CharacterView> {
               title: Text(item.name!),
               subtitle: Text(item.gender!),
             ),
+          ),
           );
         },
       ),
