@@ -12,7 +12,8 @@ class AppRouter extends $AppRouter {
     initial: true,
     children: [
       AutoRoute(page: CounterView.page),
-      AutoRoute(page: CounterRoute.page),  
+      AutoRoute(page: CounterRoute.page),
+      AutoRoute(page: CharacterView.page)  
     ],
     ),  
   ];    

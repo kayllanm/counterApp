@@ -14,7 +14,8 @@ class DashboardPage extends StatelessWidget {
     // routes of /dashboard                 
       routes: const [                
         CounterView(),                
-        CounterRoute(),                    
+        CounterRoute(),
+        CharacterView(),                   
       ],          
       transitionBuilder: (context,child,animation)=> FadeTransition(                
               opacity: animation,                
@@ -38,7 +39,8 @@ class DashboardPage extends StatelessWidget {
               },                
               items: const [                
                 BottomNavigationBarItem(label: 'bloC', icon: Icon(Icons.circle)),                
-                BottomNavigationBarItem(label: 'Redux', icon: Icon(Icons.star)),                   
+                BottomNavigationBarItem(label: 'Redux', icon: Icon(Icons.star)),
+                BottomNavigationBarItem(label: 'Characters', icon: Icon(Icons.square)),                    
               ],                
             ));                
       },                
