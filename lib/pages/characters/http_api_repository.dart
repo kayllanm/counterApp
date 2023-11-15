@@ -10,7 +10,7 @@ class ApiProvider implements ApiRepository {
   
   @override
   Future<RickAndMorty> getCharacters(body) async {
-    var url = Uri.https('rickandmortyapi.com', 'api/character', {});
+    var url = Uri.https('rickandmortyapi.com', 'api/character', body);
     var response = await http.get(url);
     RickAndMorty responseData;
     if (response.statusCode == 200) {
