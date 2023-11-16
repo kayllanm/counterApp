@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:counterapp/pages/characters/components/general_info.dart';
 import 'package:counterapp/pages/characters/entities/rick_and_morty_entity.dart';
 import 'package:counterapp/pages/characters/http_api_repository.dart';
 import 'package:flutter/material.dart';
@@ -26,15 +27,15 @@ class _CharacterViewState extends State<CharacterView> {
   }
 
   requestCharacters() async {
-      ApiProvider api = ApiProvider();
-      RickAndMorty response = await api.getCharacters({'page': _page.toString()});
-      setState(() {
-        _info = response.info!;
-        _characters = response.results;
-      });
+    ApiProvider api = ApiProvider();
+    RickAndMorty response = await api.getCharacters({'page': _page.toString()});
+    setState(() {
+      _info = response.info!;
+      _characters = response.results;
+    });
   }
 
-    Future<void> _dialogBuilder(BuildContext context, Results character) {
+  Future<void> _dialogBuilder(BuildContext context, Results character) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -44,16 +45,25 @@ class _CharacterViewState extends State<CharacterView> {
             child: Column(
               children: [
                 ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  character.image!,
-                  height: 200.0,
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.cover,
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.network(
+                    character.image!,
+                    height: 200.0,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
+                const SizedBox(
+                  height: 24,
+                ),
+                GeneralInfo('Gender', character.gender!),
+                GeneralInfo('Status', character.status!),
+                GeneralInfo('Species', character.species!),
+                GeneralInfo('Origin', character.origin!.name!),
+                GeneralInfo('Location', character.location!.name!),
               ],
-            ),),
+            ),
+          ),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
@@ -84,12 +94,14 @@ class _CharacterViewState extends State<CharacterView> {
           children: <Widget>[
             FloatingActionButton(
               backgroundColor: _info!.prev != null ? null : Colors.grey,
-              onPressed: _info!.prev != null ? () { 
-                setState(() {
-                  _page = _page - 1;
-                });
-                requestCharacters();
-              } : null,
+              onPressed: _info!.prev != null
+                  ? () {
+                      setState(() {
+                        _page = _page - 1;
+                      });
+                      requestCharacters();
+                    }
+                  : null,
               child: const Icon(Icons.arrow_back),
             ),
             FloatingActionButton(
@@ -113,21 +125,21 @@ class _CharacterViewState extends State<CharacterView> {
               _dialogBuilder(context, item);
             },
             child: Card(
-            margin: const EdgeInsets.all(8),
-            child: ListTile(
-              leading: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  item.image!,
-                  height: 60.0,
-                  width: 60.0,
-                  fit: BoxFit.cover,
+              margin: const EdgeInsets.all(8),
+              child: ListTile(
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.network(
+                    item.image!,
+                    height: 60.0,
+                    width: 60.0,
+                    fit: BoxFit.cover,
+                  ),
                 ),
+                title: Text(item.name!),
+                subtitle: Text(item.gender!),
               ),
-              title: Text(item.name!),
-              subtitle: Text(item.gender!),
             ),
-          ),
           );
         },
       ),
